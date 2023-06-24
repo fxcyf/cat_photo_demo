@@ -2,32 +2,25 @@ package com.example.catphoto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.bytedance.keva.KevaBuilder
 import com.facebook.drawee.backends.pipeline.Fresco
 
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
-//    private lateinit var viewModel: PhotosViewModel
-//    private lateinit var recyclerView: RecyclerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MainActivity", "Created")
         Fresco.initialize(this)
+        KevaBuilder.getInstance().setContext(this)
         setContentView(R.layout.activity_main)
-
-//        viewModel = ViewModelProvider(this).get(PhotosViewModel::class.java)
-//        observeData()
-//        viewModel.fetchImageUrls()
-
-//        val photoDataset = Datasource().loadPhotos()
-
-//        recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-//        recyclerView.setHasFixedSize(true)
 
     }
 
-//    private fun observeData() {
-//        viewModel.photos.observe(this, Observer { photos ->
-//            recyclerView.adapter = ItemAdapter(this, photos)
-//        })
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MainActivity", "Destroyed")
+    }
+
 }

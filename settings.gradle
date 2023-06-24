@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://maven.byted.org/nexus/content/repositories/ugc_android'
+        }
     }
 }
 rootProject.name = "Cat Photo"

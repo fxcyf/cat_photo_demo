@@ -1,6 +1,5 @@
 package com.example.catphoto.ui
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.catphoto.databinding.FragmentPhotosBinding
-import com.facebook.drawee.backends.pipeline.Fresco
 
 private const val TAG = "PhotosFragment"
 class PhotosFragment : Fragment() {
@@ -35,12 +33,22 @@ class PhotosFragment : Fragment() {
         binding.viewModel = viewModel
         Log.d(TAG, "bind viewModel")
 
-        binding.recyclerView.adapter = PhotosAdapter()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val recyclerView = binding.recyclerView
+
+        recyclerView.adapter = PhotosAdapter()
         Log.d(TAG, "bind adapter")
 
-        binding.recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        recyclerView.setHasFixedSize(true)
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -48,13 +56,10 @@ class PhotosFragment : Fragment() {
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
 
                 if (lastVisibleItem == totalItemCount - 1) {
-                    viewModel.fetchImageUrls()
+                    viewModel.fetchNewPhotoUrls()
                 }
             }
         })
-
-
-        return binding.root
     }
 
 

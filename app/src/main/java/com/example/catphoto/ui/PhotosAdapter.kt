@@ -56,7 +56,6 @@ class PhotosAdapter :
     ) {
         Log.d(TAG, "onBindViewHolder")
 
-        val catPhoto = getItem(position)
-        holder.bind(catPhoto)
+        holder.bind(getItem(position))
     }
 }
