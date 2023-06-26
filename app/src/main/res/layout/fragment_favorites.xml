@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.example.catphoto.ui.PhotosViewModel" />
+            type="com.example.catphoto.ui.FavoritesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.catphoto.ui.PhotosFragment">
+        tools:context="com.example.catphoto.ui.FavoritesFragment">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/photo_list"
+                android:id="@+id/favorite_list"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:clipToPadding="false"
@@ -32,21 +32,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:listData="@{viewModel.photos}"
+                app:favData="@{viewModel.photos}"
                 tools:listitem="@layout/list_item" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <ImageView
-            android:id="@+id/status_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:catApiStatus="@{viewModel.status}"
-            android:contentDescription="@string/loading_status" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

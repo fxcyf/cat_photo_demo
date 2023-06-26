@@ -5,22 +5,19 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="photo"
             type="com.example.catphoto.network.CatPhoto" />
     </data>
 
-<!--    <com.facebook.drawee.view.SimpleDraweeView-->
-    <ImageView
-        android:id="@+id/cat_image"
+    <!--    <ImageView-->
+    <!--            android:id="@+id/cat_image"-->
+    <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp"
         android:adjustViewBounds="true"
         app:imageUrl="@{photo.url}" />
 
-    <!--        app:srcCompat="@drawable/mtc0ntywma"-->
-    <!--            tools:src="@tools:sample/backgrounds/scenic" -->
-    <!--            app:srcCompat="@drawable/mtc0ntywma"-->
-    <!--            fresco:placeholderImage="@drawable/_di"-->
 </layout>

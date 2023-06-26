@@ -5,25 +5,23 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catphoto.databinding.ListItemBinding
 import com.example.catphoto.network.CatPhoto
 
-private const val TAG = "PhotosAdapter"
+private const val TAG = "FavoritesAdapter"
 
-class PhotosAdapter(private val viewModel: PhotosViewModel) :
-    ListAdapter<CatPhoto, PhotosAdapter.CatPhotoViewHolder>(DiffCallback) {
+class FavoritesAdapter(private val viewModel: FavoritesViewModel) :
+    ListAdapter<CatPhoto, FavoritesAdapter.CatFavoriteViewHolder>(DiffCallback) {
 
-    class CatPhotoViewHolder(
-        private var binding: ListItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    class CatFavoriteViewHolder(private var binding: ListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(catPhoto: CatPhoto) {
-            Log.d(TAG, "CatPhotoViewHolder bind")
+            Log.d(TAG, "CatFavoriteViewHolder bind")
             binding.photo = catPhoto
             binding.executePendingBindings()
         }
@@ -46,10 +44,10 @@ class PhotosAdapter(private val viewModel: PhotosViewModel) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CatPhotoViewHolder {
+    ): CatFavoriteViewHolder {
         Log.d(TAG, "onCreateViewHolder")
 
-        return CatPhotoViewHolder(
+        return CatFavoriteViewHolder(
             ListItemBinding.inflate(
                 LayoutInflater.from(parent.context)
             )
@@ -57,12 +55,9 @@ class PhotosAdapter(private val viewModel: PhotosViewModel) :
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onBindViewHolder(
-        holder: CatPhotoViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: CatFavoriteViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
-        val image: CatPhoto = getItem(position)
+        val image = getItem(position)
         holder.bind(image)
 
         val gestureDetector = GestureDetector(
@@ -71,7 +66,7 @@ class PhotosAdapter(private val viewModel: PhotosViewModel) :
                 override fun onDoubleTap(e: MotionEvent): Boolean {
                     // Handle double-tap gesture
                     Log.d(TAG, "Double clicked")
-                    viewModel.saveAsFavorite(holder.itemView.context, image)
+                    viewModel.removeFavorite(holder.itemView.context, image.id)
                     return super.onDoubleTap(e)
                 }
             })
@@ -81,4 +76,5 @@ class PhotosAdapter(private val viewModel: PhotosViewModel) :
             true
         }
     }
+
 }

@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.catphoto.databinding.FragmentPhotosBinding
 
 private const val TAG = "PhotosFragment"
+
 class PhotosFragment : Fragment() {
 
     private val viewModel: PhotosViewModel by viewModels()
     private var _binding: FragmentPhotosBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +41,9 @@ class PhotosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = binding.recyclerView
+        val recyclerView = binding.photoList
 
-        recyclerView.adapter = PhotosAdapter()
+        recyclerView.adapter = PhotosAdapter(viewModel)
         Log.d(TAG, "bind adapter")
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -60,7 +62,16 @@ class PhotosFragment : Fragment() {
                 }
             }
         })
+
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refreshPhotoUrls()
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
